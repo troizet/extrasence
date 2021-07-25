@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use app\factory\ExtrasenceFactory;
 use app\factory\HistoryFactory;
 use app\interfaces\StoreInterface;
 use Yii;
@@ -25,12 +26,7 @@ class ExtrasenceStore implements StoreInterface {
         if (!empty($extrasences)) {
            return unserialize($extrasences);
         } else {
-            $ext = [];
-            
-            $ext[] = new Extrasense('John', new GuessLogicOne());
-            $ext[] = new Extrasense('Mary', new GuessLogicTwo());
-            
-            return $ext;
+           return ExtrasenceFactory::getExtrasences();
         }
     }
     
