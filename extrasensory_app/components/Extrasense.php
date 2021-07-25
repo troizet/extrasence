@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\components;
 
 use app\interfaces\ExtrasenceInterface;
 use app\interfaces\GuessLogicInterface;

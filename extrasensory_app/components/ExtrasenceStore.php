@@ -16,4 +16,9 @@ class ExtrasenceStore {
     {
         
     }
+    
+    public function getHistory(): object
+    {
+        
+    }
 }

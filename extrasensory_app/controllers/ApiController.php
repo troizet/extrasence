@@ -9,9 +9,9 @@
 namespace app\controllers;
 
 use app\components\RoundHistory;
-use app\models\Extrasense;
-use app\models\GuessLogicOne;
-use app\models\GuessLogicTwo;
+use app\components\Extrasense;
+use app\components\GuessLogicOne;
+use app\components\GuessLogicTwo;
 use Yii;
 use yii\rest\Controller;
 
@@ -34,8 +34,6 @@ class ApiController extends Controller{
     public function init()
     {
         $this->session = Yii::$app->session;
-   
-       // $this->session->removeAll();
         
         $extrasences = $this->session->get('extrasences');
         $roundHistory = $this->session->get('round_history');
@@ -101,6 +99,11 @@ class ApiController extends Controller{
     public function actionHistory()
     {
         return $this->roundHistory->getRounds();
+    }
+    
+    public function actionClear()
+    {
+        $this->session->removeAll();
     }
     
     private function saveToSession(): void

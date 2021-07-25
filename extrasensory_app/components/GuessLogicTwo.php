@@ -6,19 +6,19 @@
  * and open the template in the editor.
  */
 
-namespace app\models;
+namespace app\components;
 
 use app\interfaces\GuessLogicInterface;
 
 /**
- * Description of GuessLogicOne
+ * Description of GuessLogicTwo
  *
  * @author krok
  */
-class GuessLogicOne implements GuessLogicInterface {
+class GuessLogicTwo implements GuessLogicInterface {
     //put your code here
     public function guess(): int {
-        return rand(0, 99);
+        return 30;
     }
 
 }
