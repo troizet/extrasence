@@ -27,7 +27,7 @@ $this->registerJsFile('js/main.js');
         Догадки экстрасенсов:
         <ul id="array-rendering">
             <li v-for="item in extrasences">
-               Экстрасенс: {{ item.name }} Догадка: {{ item.guess }}
+               Экстрасенс: {{ item.name }} Догадка: {{ item.guess }} Уровень достоверности: {{ item.acuracy }}
             </li>
         </ul>
     </div>

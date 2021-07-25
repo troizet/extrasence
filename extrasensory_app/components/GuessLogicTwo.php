@@ -16,9 +16,15 @@ use app\interfaces\GuessLogicInterface;
  * @author krok
  */
 class GuessLogicTwo implements GuessLogicInterface {
-    //put your code here
+    
+    private $number;
+    
+    public function __construct() {
+        $this->number = 0;
+    }
+    
     public function guess(): int {
-        return 30;
+        return ++$this->number;
     }
 
 }

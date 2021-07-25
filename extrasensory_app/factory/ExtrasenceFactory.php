@@ -9,8 +9,7 @@
 namespace app\factory;
 
 use app\components\Extrasense;
-use app\components\GuessLogicOne;
-use app\components\GuessLogicTwo;
+use Yii;
 
 /**
  * Description of ExtrasenceFactory
@@ -20,10 +19,14 @@ use app\components\GuessLogicTwo;
 class ExtrasenceFactory {
 
     public static function getExtrasences(): array {
+        
         $ext = [];
-
-        $ext[] = new Extrasense('John', new GuessLogicOne());
-        $ext[] = new Extrasense('Mary', new GuessLogicTwo());
+        
+        $extrasences = Yii::$app->params['extrasences'];
+        
+        foreach ($extrasences as $extrasence) {
+            $ext[] = new Extrasense($extrasence['name'], GuessLogicFactory::getLogic($extrasence['logic']));
+        }
 
         return $ext;
     }
