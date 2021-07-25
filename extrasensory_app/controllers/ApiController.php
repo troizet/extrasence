@@ -18,7 +18,7 @@ use yii\rest\Controller;
  *
  * @author krok
  */
-class ApiController extends Controller{
+class ApiController extends Controller {
     
     /**
      *
@@ -27,13 +27,10 @@ class ApiController extends Controller{
     private $extrasences = [];
     private $roundHistory;
     
-    private $session;
     private $store;
     
     public function init()
-    {
-        $this->session = Yii::$app->session;
-        
+    {       
         $this->store = new ExtrasenceStore();
       
         $this->extrasences = $this->store->getExtrasences();
@@ -47,7 +44,7 @@ class ApiController extends Controller{
             $extrasence->guess();
         }
         
-        $this->save();
+        $this->saveRound();
         
         return $this->getStatistic();
     }
@@ -61,7 +58,7 @@ class ApiController extends Controller{
         
         $this->roundHistory->setRound($number, $this->extrasences);
         
-        $this->save();
+        $this->saveRound();
         
         return $this->getStatistic();
     }
@@ -91,10 +88,10 @@ class ApiController extends Controller{
     
     public function actionClear()
     {
-        $this->session->removeAll();
+        $this->store->clear();
     }
     
-    private function save(): void
+    private function saveRound(): void
     {
         $this->store->setExtrasences($this->extrasences);
         $this->store->setHistory($this->roundHistory);

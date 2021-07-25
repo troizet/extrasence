@@ -2,14 +2,14 @@
 
 namespace app\components;
 
-
+use app\interfaces\StoreInterface;
 use Yii;
 /**
  * Description of ExtrasenceStore
  *
  * @author krok
  */
-class ExtrasenceStore {
+class ExtrasenceStore implements StoreInterface {
     
     private $session;
     
@@ -43,13 +43,18 @@ class ExtrasenceStore {
         }
     }
     
-    public function setExtrasences(array $extrasences)
+    public function setExtrasences(array $extrasences): void
     {
         $this->session->set('extrasences', serialize($extrasences));
     }
     
-    public function setHistory($history)
+    public function setHistory($history): void
     {
         $this->session->set('round_history', serialize($history));
+    }
+    
+    public function clear(): void
+    {
+        $this->session->removeAll();
     }
 }
