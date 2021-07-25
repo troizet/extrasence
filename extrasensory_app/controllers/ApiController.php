@@ -9,9 +9,7 @@
 namespace app\controllers;
 
 use app\components\RoundHistory;
-use app\components\Extrasense;
-use app\components\GuessLogicOne;
-use app\components\GuessLogicTwo;
+use app\components\ExtrasenceStore;
 use Yii;
 use yii\rest\Controller;
 
@@ -30,26 +28,16 @@ class ApiController extends Controller{
     private $roundHistory;
     
     private $session;
+    private $store;
     
     public function init()
     {
         $this->session = Yii::$app->session;
         
-        $extrasences = $this->session->get('extrasences');
-        $roundHistory = $this->session->get('round_history');
-        
-        if (!empty($extrasences)) {
-            $this->extrasences = $this->unserializeExtrasences($extrasences);
-        } else {
-            $this->extrasences[] = new Extrasense('John', new GuessLogicOne());
-            $this->extrasences[] = new Extrasense('Mary', new GuessLogicTwo());
-        }
-        
-        if ($roundHistory !== null) {
-            $this->roundHistory = $this->unserializeHistory($roundHistory);
-        } else {
-            $this->roundHistory = new RoundHistory();
-        }
+        $this->store = new ExtrasenceStore();
+      
+        $this->extrasences = $this->store->getExtrasences();
+        $this->roundHistory = $this->store->getHistory();
     }
     
     public function actionGuess()
@@ -59,7 +47,7 @@ class ApiController extends Controller{
             $extrasence->guess();
         }
         
-        $this->saveToSession();
+        $this->save();
         
         return $this->getStatistic();
     }
@@ -73,7 +61,7 @@ class ApiController extends Controller{
         
         $this->roundHistory->setRound($number, $this->extrasences);
         
-        $this->saveToSession();
+        $this->save();
         
         return $this->getStatistic();
     }
@@ -106,29 +94,9 @@ class ApiController extends Controller{
         $this->session->removeAll();
     }
     
-    private function saveToSession(): void
+    private function save(): void
     {
-        $this->session->set('extrasences', $this->serializeExtrasences());
-        $this->session->set('round_history', $this->serializeHistory());
-    }
-    
-    private function serializeExtrasences(): string
-    {
-        return serialize($this->extrasences);
-    }
-    
-    private function unserializeExtrasences(string $str): array
-    {
-        return unserialize($str);
-    }
-    
-    private function serializeHistory(): string
-    {
-        return serialize($this->roundHistory);
-    }
-    
-    private function unserializeHistory(string $str): object
-    {
-        return unserialize($str);
+        $this->store->setExtrasences($this->extrasences);
+        $this->store->setHistory($this->roundHistory);
     }
 }
