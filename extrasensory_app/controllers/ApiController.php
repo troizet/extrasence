@@ -60,11 +60,11 @@ class ApiController extends Controller{
         return $this->getStatistic();
     }
     
-    public function actionAccuracy(int $number) 
+    public function actionAcuracy(int $number) 
     {
         foreach ($this->extrasences as $extrasence)
         {
-            $extrasence->calculateAccuracy($number);
+            $extrasence->calculateAcuracy($number);
         }
         
         $this->saveToSession();
@@ -80,8 +80,11 @@ class ApiController extends Controller{
         {
             $extrasenceName = $extrasence->getName();
             
-            $statistic[$extrasenceName]['guess'] = $extrasence->getGuessed();
-            $statistic[$extrasenceName]['accuracy'] = $extrasence->getAccuracy();
+            $statistic[]= [
+                'name' => $extrasenceName,
+                'guess' => $extrasence->getGuessed(),
+                'acuracy' => $extrasence->getAcuracy()
+            ];       
         }
         
         return $statistic;

@@ -15,22 +15,22 @@ class Extrasense implements ExtrasenceInterface {
     private $name;
     private $guessLogic;
     private $guessed;
-    private $accuracy;
+    private $acuracy;
     
 
     public function __construct(string $name, GuessLogicInterface $logic) 
     {
         $this->name = $name;
         $this->guessLogic = $logic;
-        $this->accuracy = 0;
+        $this->acuracy = 0;
     }
     
-    public function calculateAccuracy(int $number): void
+    public function calculateAcuracy(int $number): void
     {
         if ($this->guessed === $number) {
-            $this->accuracy++;
+            $this->acuracy++;
         } else {
-            $this->accuracy--;
+            $this->acuracy--;
         }
     }
 
@@ -49,9 +49,9 @@ class Extrasense implements ExtrasenceInterface {
        return $this->guessed;
     }
 
-    public function getAccuracy(): int
+    public function getAcuracy(): int
     {
-        return $this->accuracy;
+        return $this->acuracy;
     }
     
 }
