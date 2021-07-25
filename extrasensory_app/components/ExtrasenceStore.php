@@ -6,11 +6,7 @@ use app\factory\ExtrasenceFactory;
 use app\factory\HistoryFactory;
 use app\interfaces\StoreInterface;
 use Yii;
-/**
- * Description of ExtrasenceStore
- *
- * @author krok
- */
+
 class ExtrasenceStore implements StoreInterface {
     
     private $session;

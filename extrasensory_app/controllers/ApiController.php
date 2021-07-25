@@ -1,21 +1,10 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace app\controllers;
 
 use app\factory\StoreFactory;
 use yii\rest\Controller;
 
-/**
- * Description of ApiController
- *
- * @author krok
- */
 class ApiController extends Controller {
     
     /**
@@ -23,6 +12,11 @@ class ApiController extends Controller {
      * @var ExtrasenceInterfaces[]
      */
     private $extrasences = [];
+    
+    /**
+     *
+     * @var HistoryInterface
+     */
     private $roundHistory;
     
     private $store;
