@@ -8,11 +8,12 @@
 
 namespace app\controllers;
 
+use app\components\RoundHistory;
 use app\models\Extrasense;
 use app\models\GuessLogicOne;
 use app\models\GuessLogicTwo;
-use yii\rest\Controller;
 use Yii;
+use yii\rest\Controller;
 
 /**
  * Description of ApiController
@@ -26,6 +27,7 @@ class ApiController extends Controller{
      * @var ExtrasenceInterfaces[]
      */
     private $extrasences = [];
+    private $roundHistory;
     
     private $session;
     
@@ -34,17 +36,21 @@ class ApiController extends Controller{
         $this->session = Yii::$app->session;
         
         $extrasences = $this->session->get('extrasences');
-        
-        //var_dump($extrasences);
-        //print_r('hi');
-        //die();
+        $roundHistory = $this->session->get('round_history');
         
         if (!empty($extrasences)) {
             $this->extrasences = $this->unserializeExtrasences($extrasences);
-            //print_r($this->extrasences);
         } else {
             $this->extrasences[] = new Extrasense('John', new GuessLogicOne());
             $this->extrasences[] = new Extrasense('Mary', new GuessLogicTwo());
+            
+            $this->roundHistory = new RoundHistory();
+        }
+        
+        if (!$roundHistory) {
+            $this->roundHistory = $this->unserializeHistory($roundHistory);
+        } else {
+            $this->roundHistory = new RoundHistory();
         }
     }
     
@@ -66,6 +72,8 @@ class ApiController extends Controller{
         {
             $extrasence->calculateAcuracy($number);
         }
+        
+        $this->roundHistory->setRound($number, $this->extrasences);
         
         $this->saveToSession();
         
@@ -90,9 +98,15 @@ class ApiController extends Controller{
         return $statistic;
     }
     
+    public function actionHistory()
+    {
+        return $this->roundHistory->getRounds();
+    }
+    
     private function saveToSession(): void
     {
         $this->session->set('extrasences', $this->serializeExtrasences());
+        $this->session->set('round_history', $this->serializeHistory());
     }
     
     private function serializeExtrasences(): string
@@ -101,6 +115,16 @@ class ApiController extends Controller{
     }
     
     private function unserializeExtrasences(string $str): array
+    {
+        return unserialize($str);
+    }
+    
+    private function serializeHistory(): string
+    {
+        return serialize($this->roundHistory);
+    }
+    
+    private function unserializeHistory(string $str): object
     {
         return unserialize($str);
     }
