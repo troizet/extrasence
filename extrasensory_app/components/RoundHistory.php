@@ -22,7 +22,10 @@ class RoundHistory {
     {
         $extrasenseGuesses = [];
         foreach ($extrasences as $extrasence) {
-            $extrasenseGuesses[$extrasence->getName()] = $extrasence->getGuessed();
+            $extrasenseGuesses[] = [
+                'name' => $extrasence->getName(),
+                'guess' => $extrasence->getGuessed()
+            ];
         }
         
         $this->rounds[] = [

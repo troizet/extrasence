@@ -5,21 +5,25 @@ var Main = {
                 guessedNumber: 0,
                 extrasences: [],
                 error: '',
-                showError: false
+                showError: false,
+                history: []
             }
     },
-    
+    mounted() {
+        this.performHistoryAction();
+    },
     methods: {
         getGuess() {          
+            this.performGuessAction();
             this.isGuessed = true;
-            exctrasences = this.performGuessAction();
         },   
         getAcuracy() {
             if (this.guessedNumber > 99 || this.guessedNumber < 0) {
                 this.showErrorMessage('Число должно быть двузначным');
             } else {
                 this.isGuessed = false;
-                exctrasences = this.performGetAcuracy();
+                this.performAcuracyAction();
+                this.performHistoryAction();
             }
         },
         performGuessAction() {
@@ -38,7 +42,7 @@ var Main = {
                 this.showErrorMessage(error); 
             });
         },
-        performGetAcuracy() {
+        performAcuracyAction() {
             fetch('/api/acuracy?number=' + this.guessedNumber)
             .then((response) => {
                 if (!response.ok) {
@@ -53,6 +57,22 @@ var Main = {
             .catch((error) => {
                 this.showErrorMessage(error);
             });        
+        },
+        performHistoryAction() {
+            fetch('/api/history')
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw Error(response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                        this.history = data;
+                    })
+                    .catch((error) => {
+                        this.showErrorMessage(error);
+                    });
         },
         showErrorMessage(error) {
             this.error = error;

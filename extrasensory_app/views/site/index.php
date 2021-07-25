@@ -27,10 +27,23 @@ $this->registerJsFile('js/main.js');
         Догадки экстрасенсов:
         <ul id="array-rendering">
             <li v-for="item in extrasences">
-               Экстрасенс: {{ item.name }} Догадка: {{ item.guess }} Уровень достоверности: {{ item.acuracy }}
+               Экстрасенс: {{ item.name }} Догадка: {{ item.guess }}
             </li>
         </ul>
     </div>
+    <div id="extrasences-table-history">
+        История:
+        <ul id="array-rendering">
+            <li v-for="(item, index) in history">
+               Раунд: {{index}} Загаданное число: {{ item.number }} Догадки: 
+               <ul>
+                    <li v-for="guess in item.guessed">
+                        Экстрасенс: {{ guess.name }} Догадка: {{ guess.guess }}
+                    </li>
+               </ul>
+            </li>
+        </ul>
+     </div>
     <div id="error-message" v-if="showError">
         {{ this.error }}
     </div>

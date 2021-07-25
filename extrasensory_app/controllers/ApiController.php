@@ -34,6 +34,8 @@ class ApiController extends Controller{
     public function init()
     {
         $this->session = Yii::$app->session;
+   
+       // $this->session->removeAll();
         
         $extrasences = $this->session->get('extrasences');
         $roundHistory = $this->session->get('round_history');
@@ -43,11 +45,9 @@ class ApiController extends Controller{
         } else {
             $this->extrasences[] = new Extrasense('John', new GuessLogicOne());
             $this->extrasences[] = new Extrasense('Mary', new GuessLogicTwo());
-            
-            $this->roundHistory = new RoundHistory();
         }
         
-        if (!$roundHistory) {
+        if ($roundHistory !== null) {
             $this->roundHistory = $this->unserializeHistory($roundHistory);
         } else {
             $this->roundHistory = new RoundHistory();
