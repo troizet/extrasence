@@ -2,7 +2,7 @@
 
 namespace app\components;
 
-use app\interfaces\ExtrasenceInterface;
+use app\interfaces\HistoryInterface;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,11 +14,11 @@ use app\interfaces\ExtrasenceInterface;
  *
  * @author krok
  */
-class RoundHistory {
+class RoundHistory implements HistoryInterface {
     
     private $rounds = [];
     
-    public function setRound(int $number, array $extrasences)
+    public function setRound(int $number, array $extrasences): void
     {
         $extrasenseGuesses = [];
         foreach ($extrasences as $extrasence) {
@@ -34,7 +34,7 @@ class RoundHistory {
         ];
     }
     
-    public function getRounds()
+    public function getRounds(): array
     {
         return $this->rounds;
     }

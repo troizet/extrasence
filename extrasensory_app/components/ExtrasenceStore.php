@@ -2,6 +2,7 @@
 
 namespace app\components;
 
+use app\factory\HistoryFactory;
 use app\interfaces\StoreInterface;
 use Yii;
 /**
@@ -39,7 +40,7 @@ class ExtrasenceStore implements StoreInterface {
         if ($roundHistory !== null) {
             return unserialize($roundHistory);
         } else {
-            return new RoundHistory();
+            return HistoryFactory::getHistory();
         }
     }
     

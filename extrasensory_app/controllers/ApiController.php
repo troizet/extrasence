@@ -8,9 +8,7 @@
 
 namespace app\controllers;
 
-use app\components\RoundHistory;
-use app\components\ExtrasenceStore;
-use Yii;
+use app\factory\StoreFactory;
 use yii\rest\Controller;
 
 /**
@@ -31,7 +29,7 @@ class ApiController extends Controller {
     
     public function init()
     {       
-        $this->store = new ExtrasenceStore();
+        $this->store = StoreFactory::getStore();
       
         $this->extrasences = $this->store->getExtrasences();
         $this->roundHistory = $this->store->getHistory();
