@@ -23,10 +23,11 @@ var Main = {
             } else {
                 this.isGuessed = false;
                 this.performAcuracyAction();
-                this.performHistoryAction();
+               // this.performHistoryAction();
             }
         },
         performGuessAction() {
+            
             fetch('/api/guess')
             .then((response) => {
                 if (!response.ok) {
@@ -53,6 +54,7 @@ var Main = {
             .then((data) => {
                 console.log(data);
                 this.extrasences = data;
+                this.performHistoryAction();
             })
             .catch((error) => {
                 this.showErrorMessage(error);
@@ -80,7 +82,7 @@ var Main = {
             setTimeout(() => {
                     this.showError = false;
                     this.error = '';
-            }, 5000);
+            }, 200);
         }
     }
             
