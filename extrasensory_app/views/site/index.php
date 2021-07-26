@@ -13,7 +13,7 @@ $this->registerJsFile('js/main.js');
 <div id="main">
     <div id="user-input">
         <div id="user-start" v-if="!isGuessed">
-            Загадайте число от 0 до 99:
+            Загадайте двузначное число от 10 до 99:
             <button type="button" id="number_button" v-on:click="getGuess()">Загадал</button>
         </div>    
         <div id="user-guessed" v-if="isGuessed">

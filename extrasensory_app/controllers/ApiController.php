@@ -43,6 +43,11 @@ class ApiController extends Controller {
     
     public function actionAcuracy(int $number) 
     {
+        if ($number > 99 || $number < 10) {
+            throw new BadRequestHttpException('Загаданное число должно быть двузначным');
+        }
+        
+        
         foreach ($this->extrasences as $extrasence)
         {
             $extrasence->calculateAcuracy($number);

@@ -18,7 +18,7 @@ var Main = {
             this.isGuessed = true;
         },   
         getAcuracy() {
-            if (this.guessedNumber > 99 || this.guessedNumber < 0) {
+            if (this.guessedNumber > 99 || this.guessedNumber < 10) {
                 this.showErrorMessage('Число должно быть двузначным');
             } else {
                 this.isGuessed = false;
