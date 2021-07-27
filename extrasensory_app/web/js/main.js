@@ -6,7 +6,8 @@ var Main = {
                 extrasences: [],
                 error: '',
                 showError: false,
-                history: []
+                history: [],
+                enabled: true
             }
     },
     mounted() {
@@ -15,19 +16,18 @@ var Main = {
     methods: {
         getGuess() {          
             this.performGuessAction();
-            this.isGuessed = true;
+            //this.isGuessed = true;
         },   
         getAcuracy() {
             if (this.guessedNumber > 99 || this.guessedNumber < 10) {
                 this.showErrorMessage('Число должно быть двузначным');
             } else {
-                this.isGuessed = false;
+                //this.isGuessed = false;
                 this.performAcuracyAction();
-               // this.performHistoryAction();
             }
         },
         performGuessAction() {
-            
+            this.enabled = false;
             fetch('/api/guess')
             .then((response) => {
                 if (!response.ok) {
@@ -38,12 +38,15 @@ var Main = {
             .then((data) => {
                 console.log(data);
                 this.extrasences = data;
+                this.isGuessed = true;
+                this.enabled = true;
             })
             .catch((error) => {
                 this.showErrorMessage(error); 
             });
         },
         performAcuracyAction() {
+            this.enabled = false;
             fetch('/api/acuracy?number=' + this.guessedNumber)
             .then((response) => {
                 if (!response.ok) {
@@ -71,6 +74,8 @@ var Main = {
                     .then((data) => {
                         console.log(data);
                         this.history = data;
+                        this.isGuessed = false;
+                        this.enabled = true;
                     })
                     .catch((error) => {
                         this.showErrorMessage(error);
@@ -82,7 +87,7 @@ var Main = {
             setTimeout(() => {
                     this.showError = false;
                     this.error = '';
-            }, 200);
+            }, 2000);
         }
     }
             

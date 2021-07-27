@@ -14,13 +14,16 @@ $this->registerJsFile('js/main.js');
     <div id="user-input">
         <div id="user-start" v-if="!isGuessed">
             Загадайте двузначное число от 10 до 99:
-            <button type="button" id="number_button" v-on:click="getGuess()">Загадал</button>
+            <button :disabled="!enabled" type="button" id="number_button" v-on:click="getGuess()">Загадал</button>
         </div>    
         <div id="user-guessed" v-if="isGuessed">
             Введите загаданное число:
             <input type="text" id="number_input" v-model="guessedNumber">
-            <button type="button" id="number_button" v-on:click="getAcuracy()">Отправить</button>        
+            <button :disabled="!enabled" type="button" id="number_button" v-on:click="getAcuracy()">Отправить</button>        
         </div>
+    </div>
+    <div id="error-message" v-if="showError">
+        {{ this.error }}
     </div>
     <div id="extrasences-table">
         Текущие догадки экстрасенсов:
@@ -43,8 +46,6 @@ $this->registerJsFile('js/main.js');
             </li>
         </ul>
      </div>
-    <div id="error-message" v-if="showError">
-        {{ this.error }}
-    </div>
+
          
 </div>
